@@ -1,0 +1,20 @@
+Fitter Status : Successful - Wed Jan 07 12:56:26 2026
+Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+Revision Name : Bram_IP_task
+Top-level Entity Name : Bram_IP_task
+Family : Cyclone V
+Device : 5CEFA2F23C6
+Timing Models : Final
+Logic utilization (in ALMs) : 85 / 9,430 ( < 1 % )
+Total registers : 123
+Total pins : 21 / 224 ( 9 % )
+Total virtual pins : 0
+Total block memory bits : 64 / 1,802,240 ( < 1 % )
+Total RAM Blocks : 1 / 176 ( < 1 % )
+Total DSP Blocks : 0 / 25 ( 0 % )
+Total HSSI RX PCSs : 0
+Total HSSI PMA RX Deserializers : 0
+Total HSSI TX PCSs : 0
+Total HSSI PMA TX Serializers : 0
+Total PLLs : 0 / 4 ( 0 % )
+Total DLLs : 0 / 4 ( 0 % )

@@ -1,0 +1,87 @@
+
+module adder_tree_multiplier_8bit_core (
+    input [7:0] A,
+    input [7:0] B,
+    output [15:0] P
+);
+
+    // Partial products
+    wire [15:0] pp0, pp1, pp2, pp3, pp4, pp5, pp6, pp7;
+
+    // Adder tree levels
+    wire [15:0] s1_a, s1_b, s1_c, s1_d;
+    wire [15:0] s2_a, s2_b;
+
+    // Generate partial products
+    assign pp0 = B[0] ? (A << 0) : 16'b0;
+    assign pp1 = B[1] ? (A << 1) : 16'b0;
+    assign pp2 = B[2] ? (A << 2) : 16'b0;
+    assign pp3 = B[3] ? (A << 3) : 16'b0;
+    assign pp4 = B[4] ? (A << 4) : 16'b0;
+    assign pp5 = B[5] ? (A << 5) : 16'b0;
+    assign pp6 = B[6] ? (A << 6) : 16'b0;
+    assign pp7 = B[7] ? (A << 7) : 16'b0;
+
+    // Level 1 (parallel)
+    assign s1_a = pp0 + pp1;
+    assign s1_b = pp2 + pp3;
+    assign s1_c = pp4 + pp5;
+    assign s1_d = pp6 + pp7;
+
+    // Level 2 (parallel)
+    assign s2_a = s1_a + s1_b;
+    assign s2_b = s1_c + s1_d;
+
+    // Level 3 (final)
+    assign P = s2_a + s2_b;
+
+endmodule
+
+
+
+module adder_tree_multiplier_8x8 (
+    input clk,
+    input EA,
+    input EB,
+    input EP,
+    input [7:0] A_in,
+    input [7:0] B_in,
+    output [15:0] P
+);
+
+    wire [7:0] A_reg, B_reg;
+    wire [15:0] P_comb;
+regN #(8) regA (
+    .clk(clk),
+    .reset(1'b0),
+    .en(EA),
+    .d(A_in),
+    .q(A_reg)
+);
+
+regN #(8) regB (
+    .clk(clk),
+    .reset(1'b0),
+    .en(EB),
+    .d(B_in),
+    .q(B_reg)
+);
+
+regN #(16) regP (
+    .clk(clk),
+    .reset(1'b0),
+    .en(EP),
+    .d(P_comb),
+    .q(P)
+);
+
+
+    // Adder-tree multiplier core
+    adder_tree_multiplier_8bit_core core (
+        .A(A_reg),
+        .B(B_reg),
+        .P(P_comb)
+    );
+
+endmodule
+

@@ -1,0 +1,55 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dD:/Internship_Sir_faheem/Task1_bram_Ram_ip/simulation/modelsim
+vBram_IP_task
+!s110 1767772741
+!i10b 1
+!s100 h_[z[UjI?DmQYK[C^eLS62
+Im<jQgI42HZ9X8jJg;^i]F3
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1767772629
+8D:/Internship_Sir_faheem/Task1_bram_Ram_ip/simulation/modelsim/Bram_IP_task.vo
+FD:/Internship_Sir_faheem/Task1_bram_Ram_ip/simulation/modelsim/Bram_IP_task.vo
+L0 31
+Z2 OV;L;10.5b;63
+r1
+!s85 0
+31
+!s108 1767772741.000000
+!s107 D:/Internship_Sir_faheem/Task1_bram_Ram_ip/simulation/modelsim/Bram_IP_task.vo|
+!s90 -reportprogress|30|-work|work|D:/Internship_Sir_faheem/Task1_bram_Ram_ip/simulation/modelsim/Bram_IP_task.vo|
+!i113 1
+o-work work
+Z3 tCvgOpt 0
+n@bram_@i@p_task
+vBram_Ram_ip
+!s110 1767772666
+!i10b 1
+!s100 ooXdF6L<z:Hk3Mf:U_EeR1
+Ig;lB7z`3i@E<F5;n<485A3
+R1
+R0
+w1766610086
+8D:/Internship_Sir_faheem/Task1_bram_Ram_ip/Bram_Ram_ip.v
+FD:/Internship_Sir_faheem/Task1_bram_Ram_ip/Bram_Ram_ip.v
+L0 39
+R2
+r1
+!s85 0
+31
+!s108 1767772666.000000
+!s107 D:/Internship_Sir_faheem/Task1_bram_Ram_ip/Bram_Ram_ip.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+D:/Internship_Sir_faheem/Task1_bram_Ram_ip|D:/Internship_Sir_faheem/Task1_bram_Ram_ip/Bram_Ram_ip.v|
+!i113 1
+o-vlog01compat -work work
+!s92 -vlog01compat -work work +incdir+D:/Internship_Sir_faheem/Task1_bram_Ram_ip
+R3
+n@bram_@ram_ip

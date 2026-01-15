@@ -1,0 +1,31 @@
+module Pll_Ip_task(r,g,b, clk_50,rst_n);
+input clk_50, rst_n;
+output reg r,g,b;
+
+reg [2:0] ns, cs;
+wire clk, pll_locked;
+
+always (cs) begin
+ns=cs+1;
+end
+
+always@(posedge clk) begin
+if(!rst_n) begin ns<=0; cs<=0; //no need to initialize output with 0
+end else cs<=ns;
+end
+
+always@(cs)begin
+case(cs) 
+3'b000, 3'b001, 3'b010: begin r=1 ; g=0; y=0;end
+3'b011: begin r=1; g=0; y=1;end
+3'b100, 3'b101,3'b110: begin r=0;g=1;y=0;end
+3'b111: begin r=0;g=0;y=1;end
+endcase
+end
+
+pll_traffic_ip u_pll(
+.c0(clk),.inclk0(clk_50), .locked(pll_locked)
+);
+
+
+	

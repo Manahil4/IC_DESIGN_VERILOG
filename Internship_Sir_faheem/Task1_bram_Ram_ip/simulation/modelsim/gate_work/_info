@@ -1,0 +1,33 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dD:/Internship_Sir_faheem/Task1_bram_Ram_ip/simulation/modelsim
+vBram_IP_task
+!s110 1767772935
+!i10b 1
+!s100 h_[z[UjI?DmQYK[C^eLS62
+IedIffc;?]JPMYgjhYVJP70
+VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1767772629
+8Bram_IP_task.vo
+FBram_IP_task.vo
+L0 31
+OV;L;10.5b;63
+r1
+!s85 0
+31
+!s108 1767772934.000000
+!s107 Bram_IP_task.vo|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+.|Bram_IP_task.vo|
+!i113 1
+o-vlog01compat -work work
+!s92 -vlog01compat -work work +incdir+.
+tCvgOpt 0
+n@bram_@i@p_task

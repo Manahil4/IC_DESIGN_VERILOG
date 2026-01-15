@@ -1,0 +1,33 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dD:/Internship_Sir_faheem/Task1_traffic_ip/simulation/modelsim
+vPll_Ip_task
+!s110 1767786013
+!i10b 1
+!s100 n<1LdS9boh7oL:k9:kfcj3
+IQ2kgM>4FzP]@DAHWaT[[n0
+VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1767785986
+8Pll_Ip_task.vo
+FPll_Ip_task.vo
+L0 31
+OV;L;10.5b;63
+r1
+!s85 0
+31
+!s108 1767786012.000000
+!s107 Pll_Ip_task.vo|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+.|Pll_Ip_task.vo|
+!i113 1
+o-vlog01compat -work work
+!s92 -vlog01compat -work work +incdir+.
+tCvgOpt 0
+n@pll_@ip_task

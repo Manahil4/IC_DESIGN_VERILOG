@@ -1,0 +1,32 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dD:/Downloads/Task2_miss_hafsa/simulation/modelsim
+varray_multiplier
+!s110 1767383845
+!i10b 1
+!s100 QJzZo6nIMjcEGa1L_Q?hj3
+I0<Fh4@:;H3_^P5]Q7YDWY3
+VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1767383823
+8array_multiplier_8x8.vo
+Farray_multiplier_8x8.vo
+L0 31
+OV;L;10.5b;63
+r1
+!s85 0
+31
+!s108 1767383845.000000
+!s107 array_multiplier_8x8.vo|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+.|array_multiplier_8x8.vo|
+!i113 1
+o-vlog01compat -work work
+!s92 -vlog01compat -work work +incdir+.
+tCvgOpt 0

@@ -1,0 +1,44 @@
+module array_multiplier (
+    input clk,
+    input EA,     // enable for A register
+    input EB,     // enable for B register
+    input EP,     // enable for output register
+    input [7:0] A_in,
+    input [7:0] B_in,
+    output [15:0] P
+);
+
+    wire [7:0] A_reg, B_reg;
+    wire [15:0] P_comb;
+
+    // Input registers
+    regN #(8) regA (
+        .clk(clk),
+        .en(EA),
+        .d(A_in),
+        .q(A_reg)
+    );
+
+    regN #(8) regB (
+        .clk(clk),
+        .en(EB),
+        .d(B_in),
+        .q(B_reg)
+    );
+
+    // Combinational array multiplier
+    array_multiplier_8bit_core mul_core (
+        .A(A_reg),
+        .B(B_reg),
+        .P(P_comb)
+    );
+
+    // Output register
+    regN #(16) regP (
+        .clk(clk),
+        .en(EP),
+        .d(P_comb),
+        .q(P)
+    );
+
+endmodule
