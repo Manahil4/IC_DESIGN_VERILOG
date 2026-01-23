@@ -1,0 +1,12 @@
+module register #(parameter width = 4)(q,d,clr,ld,clk);
+output reg [width-1:0] q;
+input [width-1:0] d;
+input clr,ld,clk;
+always @(posedge clk)
+begin
+if (clr)
+q <= {width{1'b0}};
+else if (ld)
+q <= d;
+end
+endmodule

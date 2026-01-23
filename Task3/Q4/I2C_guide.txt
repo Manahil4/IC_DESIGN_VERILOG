@@ -1,0 +1,274 @@
+📘 I²C COMMUNICATION — COMPLETE REVISION NOTES
+1️⃣ What is I²C?
+
+I²C (Inter-Integrated Circuit) is a 2-wire serial communication protocol used for short-distance communication between ICs.
+
+Physical Lines
+Signal	Direction	Purpose
+SCL	Mostly Master → Slave	Clock
+SDA	Bidirectional	Data + ACK
+
+Both lines are open-drain and require pull-up resistors.
+
+2️⃣ Open-Drain Concept (VERY IMPORTANT)
+❌ What I²C does NOT do
+
+No device drives logic 1
+
+No push-pull output
+
+✅ What I²C DOES
+
+Devices only pull lines LOW
+
+HIGH comes from pull-up resistor
+
+SDA Implementation in Verilog
+assign SDA = (sda_drive == 0) ? 1'b0 : 1'bz;
+
+sda_drive	Effect
+0	Pull SDA LOW
+1	Release SDA (Z → pulled HIGH)
+3️⃣ I²C Protocol Rules
+Core Rules
+
+SDA changes only when SCL = 0
+
+SDA is sampled when SCL = 1
+
+START: SDA ↓ while SCL = 1
+
+STOP: SDA ↑ while SCL = 1
+
+ACK: Receiver pulls SDA LOW on 9th clock
+
+4️⃣ Roles in I²C
+Master
+
+Controls SCL
+
+Generates START/STOP
+
+Sends address + R/W bit
+
+Sends data
+
+Releases SDA during ACK
+
+Slave
+
+Listens to address
+
+Pulls SDA LOW for ACK
+
+Can stretch clock (optional)
+
+5️⃣ Addressing
+
+7-bit address → 128 devices
+
+Followed by R/W bit
+
+0 → Write
+
+1 → Read
+
+Example:
+
+[ A6 A5 A4 A3 A2 A1 A0 | W ]
+
+6️⃣ Assignment Assumptions (Your Task)
+
+✔ 1 Master
+✔ 1 Slave
+✔ Known 7-bit address
+✔ Master-initiated write
+✔ 12-bit data
+✔ Data split into:
+
+Byte1 = data[11:4]
+Byte2 = data[3:0] + 0000
+
+7️⃣ Required Write Sequence
+START
+→ Address + W
+→ ACK
+→ Data[7:0]
+→ ACK
+→ Data[3:0] + 0000
+→ ACK
+→ STOP
+
+8️⃣ Why 12-bit Data?
+
+Protocol transmits bytes only
+
+12-bit value must be split
+
+Padding is required for last byte
+
+byte1 = data_in[11:4];
+byte2 = {data_in[3:0], 4'b0000};
+
+9️⃣ FSM Design (Master Side)
+FSM States
+State	Purpose
+IDLE	Wait for start
+START	Generate start condition
+SEND_ADDR	Send 8-bit address
+ADDR_ACK	Wait for ACK
+SEND_DATA1	Send upper byte
+DATA1_ACK	Wait for ACK
+SEND_DATA2	Send padded byte
+DATA2_ACK	Wait for ACK
+STOP	Generate stop
+DONE	Transaction finished
+🔟 Bit-Level Transmission Logic
+Bit Transfer Flow
+SCL = 0 → Drive SDA
+SCL = 1 → Slave samples SDA
+
+Code Pattern
+if (!SCL)
+    sda_drive <= shift_reg[bit_cnt];
+else if (SCL)
+    bit_cnt <= bit_cnt - 1;
+
+1️⃣1️⃣ ACK Handling (CRITICAL)
+ACK Rules
+
+Master releases SDA
+
+Slave pulls SDA LOW
+
+ACK sampled when SCL = 1
+
+ACK Logic
+if (!SCL)
+    sda_drive <= 1;   // release SDA
+else begin
+    if (SDA)
+        ack_error <= 1;  // NACK
+end
+
+SDA	Meaning
+0	ACK
+1	NACK
+1️⃣2️⃣ What if ACK Fails?
+Correct Behavior
+
+Stop transmission
+
+Generate STOP condition
+
+Set ack_error = 1
+
+if (SDA) begin
+    ack_error <= 1;
+    state <= STOP;
+end
+
+
+🚫 Master must never continue after NACK.
+
+1️⃣3️⃣ SCL Generation
+
+Master controls SCL
+
+Simple clock divider used
+
+if (busy)
+    SCL <= ~SCL;
+else
+    SCL <= 1;
+
+1️⃣4️⃣ Why ACK Logic Is Inside Design (Not TB)
+Design must:
+
+Obey protocol rules
+
+Handle ACK/NACK
+
+Handle STOP on error
+
+Testbench must:
+
+Drive inputs
+
+Model slave
+
+Verify outputs
+
+Protocol logic is NOT scenario-dependent.
+
+1️⃣5️⃣ Dummy Slave (Testbench Only)
+
+Used only to generate ACK.
+
+assign SDA = (SCL) ? 1'b0 : 1'bz;
+
+
+Pulls SDA LOW during ACK phase
+
+Mimics a compliant slave
+
+1️⃣6️⃣ Testbench Responsibilities
+TB Does:
+
+✔ Generates clock
+✔ Applies reset
+✔ Triggers start
+✔ Instantiates dummy slave
+✔ Observes done and ack_error
+
+TB Does NOT:
+
+❌ Implement protocol rules
+❌ Drive SDA during data bits
+
+1️⃣7️⃣ Why SDA Is inout
+
+Because:
+
+Master drives SDA during data
+
+Slave drives SDA during ACK
+
+Both must release it otherwise
+
+1️⃣8️⃣ Signals Summary
+Signal	Meaning
+start	Begin transaction
+busy	I²C active
+done	Transaction completed
+ack_error	Slave NACK detected
+SDA	Open-drain data
+SCL	Clock
+1️⃣9️⃣ Common Mistakes (You Avoided)
+
+❌ Driving SDA high
+❌ Ignoring ACK
+❌ Continuing after NACK
+❌ Putting protocol logic in TB
+❌ Treating SDA as normal wire
+
+2️⃣0️⃣ Final Mental Model
+
+Master controls timing
+Slave controls ACK
+Open-drain prevents contention
+FSM enforces protocol
+
+🔥 You Now Understand
+
+Real I²C hardware behavior
+
+Why ACK logic is written that way
+
+Why SDA uses high-Z
+
+Why FSM must abort on NACK
+
+How design and TB are separated
+
+This is interview-level understanding, not lab-level.
